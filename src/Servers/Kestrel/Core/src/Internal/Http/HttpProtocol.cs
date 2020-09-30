@@ -1098,6 +1098,12 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 _keepAlive = false;
             }
 
+            // The request is being upgraded to a different protocol. No more requests can arrive on this connection.
+            if (StatusCode == StatusCodes.Status101SwitchingProtocols)
+            {
+                _keepAlive = false;
+            }
+
             // Set whether response can have body
             _canWriteResponseBody = CanWriteResponseBody();
 
